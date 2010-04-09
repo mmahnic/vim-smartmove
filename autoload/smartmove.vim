@@ -93,8 +93,10 @@ endfunction
 function! smartmove#NextHelpLink(forward, onscreen)
   let retag = '|\S\+|'
   if a:forward | let bflag = ''
-  else | let bflag = 'b'
-    endif
+  else
+    let bflag = 'b'
+    normal! h
+  endif
   if !a:onscreen
     let found = search(retag, bflag . 'w')
   else
