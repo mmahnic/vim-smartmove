@@ -91,33 +91,39 @@ function smartmove#SmartScreenBottom(count) range
 endfunction
 
 function! smartmove#NextHelpLink(forward, onscreen)
-  let retag = '|\S\+|'
-  if a:forward | let bflag = ''
-  else
-    let bflag = 'b'
-    normal! h
-  endif
-  if !a:onscreen
-    let found = search(retag, bflag . 'w')
-  else
-    if a:forward | let lend = line('w$')
-    else | let lend = line('w0')
+  let retag = '\m|\S\+|\|''\w\w\+'''
+  let sscoff = &scrolloff
+  try
+    let &scrolloff=0
+    if a:forward | let bflag = ''
+    else
+      let bflag = 'b'
+      normal! h
     endif
-    let pos = getpos('.')
-    let found = search(retag, bflag . 'W', lend)
-    if !found
-      if a:forward | exec 'normal! H'
-      else | exec 'normal! L'
+    if !a:onscreen
+      let found = search(retag, bflag . 'w')
+    else
+      if a:forward | let lend = line('w$')
+      else | let lend = line('w0')
       endif
+      let pos = getpos('.')
       let found = search(retag, bflag . 'W', lend)
       if !found
-        call setpos('.', pos)
+        if a:forward | exec 'normal! H0'
+        else | exec 'normal! L$'
+        endif
+        let found = search(retag, bflag . 'W', lend)
+        if !found
+          call setpos('.', pos)
+        endif
       endif
     endif
-  endif
-  if found
-    normal! l
-  endif
+    if found
+      normal! l
+    endif
+  finally
+    let &scrolloff = sscoff
+  endtry
 endfunction
 
 " install:
