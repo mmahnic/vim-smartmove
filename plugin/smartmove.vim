@@ -1,8 +1,9 @@
 
-if exists("g:loaded_smartmove") && g:loaded_smartmove != 0
+let g:loadedPlug = get(g:, 'loadedPlug', {})
+if get(g:loadedPlug, 'smartmove', 0)
    finish
 endif
-let g:loaded_smartmove = 1
+let g:loadedPlug.smartmove = -1
 
 
 " DOC Options: 
@@ -81,3 +82,5 @@ if get(g:plug_smartmove, 'map_home_end', 1) > 0
    unlet s:maps
    delfunction s:Install_MapHomeEnd
 endif
+
+let g:loadedPlug.smartmove = 1
