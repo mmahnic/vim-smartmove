@@ -126,35 +126,6 @@ function! smartmove#NextHelpLink(forward, onscreen)
   endtry
 endfunction
 
-" install:
-"   SmMapHomeEnd()
-function smartmove#MapHomeEnd()
-  let vpostfix = "<bar>msgv's"
-  nmap <silent><Home> :call smartmove#SmartHome('n')<CR>
-  nmap <silent><End> :call smartmove#SmartEnd('n')<CR>
-  "imap <silent><Home> <C-r>=smartmove#SmartHome('i')<CR>
-  "imap <silent><End> <C-r>=smartmove#SmartEnd('i')<CR>
-  exec "vmap <silent><Home> <Esc>:call smartmove#SmartHome('v')<CR>" . vpostfix
-  exec "vmap <silent><End> <Esc>:call smartmove#SmartEnd('v')<CR>" . vpostfix
-endfunction
-
-" install:
-"   MapSmartScreen("n", "H", "L")
-"   MapSmartScreen("v", "H", "L")
-"function smartmove#MapSmartScreen(mode, keytop, keybottom)
-"  let postfix = "<CR>"
-"  if a:mode == "n" | let prefix = " :call "
-"  " elseif a:mode == "i" | let prefix = " <C-r>="
-"  elseif a:mode == "v"
-"    let prefix = " :<C-u>exec 'normal! gv'<bar>call "
-"    let postfix = "<CR><bar>msgv's"
-"  else
-"    return
-"  endif
-"  exec a:mode . "map <silent> " . a:keytop . prefix . "smartmove#SmartScreenTop(v:count)" . postfix
-"  exec a:mode . "map <silent> " . a:keybottom . prefix . "smartmove#SmartScreenBottom(v:count)" . postfix
-"endfunction
-
 function! smartmove#InstallNextHelpTag()
   if &buftype == 'help' || &filetype == 'help' && &readonly
     nmap <silent> <buffer> <tab> :call smartmove#NextHelpLink(1,1)<cr>
@@ -162,37 +133,3 @@ function! smartmove#InstallNextHelpTag()
   endif
 endfunction
 
-" =========================================================================== 
-" Global Initialization - Processed by Plugin Code Generator
-" =========================================================================== 
-finish
-
-" smartmove.vim will be autoloaded when ft set to help
-" <VIMPLUGIN id="smartmove#nexthelptag">
-  augroup smartmoveNextHelpTag
-    autocmd!
-    autocmd FileType help call smartmove#InstallNextHelpTag()
-  augroup END
-" </VIMPLUGIN>
-
-" smartmove.vim will be autoloaded when a mapped key is pressed
-" (the defined function is a copy of #MapSmartScreen)
-" (funny idea: map the keys to smartmove#MapSmartScreen and redefine them there)
-" <VIMPLUGIN id="smartmove#smartscreen">
-  function s:SmartMove_MapSmartScreen(mode, keytop, keybottom)
-    let postfix = "<CR>"
-    if a:mode == "n" | let prefix = " :call "
-    " elseif a:mode == "i" | let prefix = " <C-r>="
-    elseif a:mode == "v"
-      let prefix = " :<C-u>exec 'normal! gv'<bar>call "
-      let postfix = "<CR><bar>msgv's"
-    else
-      return
-    endif
-    exec a:mode . "map <silent> " . a:keytop . prefix . "smartmove#SmartScreenTop(v:count)" . postfix
-    exec a:mode . "map <silent> " . a:keybottom . prefix . "smartmove#SmartScreenBottom(v:count)" . postfix
-  endfunction
-  call s:SmartMove_MapSmartScreen('n', 'H', 'L')
-  call s:SmartMove_MapSmartScreen('v', 'H', 'L')
-  delfunction s:SmartMove_MapSmartScreen
-" </VIMPLUGIN>
