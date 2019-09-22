@@ -6,10 +6,12 @@
 " License:       You may redistribute this plugin under the same terms as Vim
 "                itself.
 
-if vxlib#plugin#StopLoading("#au#smartmove")
-  finish
+" Use VxLib plugin registration without loading VxLib
+let g:loadedAutoload = get(g:, 'loadedAutoload', {})
+if get(g:loadedAutoload, '#smartmove', 0)
+   finish
 endif
-
+let g:loadedAutoload['#smartmove'] = 1
 
 function smartmove#SmartHome(mode)
   let curcol = col(".")

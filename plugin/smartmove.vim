@@ -1,9 +1,9 @@
-
-let g:loadedPlug = get(g:, 'loadedPlug', {})
-if get(g:loadedPlug, 'smartmove', 0)
+" Use VxLib plugin registration without loading VxLib
+let g:loadedPlugins = get(g:, 'loadedPlugins', {})
+if get(g:loadedPlugins, 'smartmove', 0)
    finish
 endif
-let g:loadedPlug.smartmove = -1
+let g:loadedPlugins['smartmove'] = 1
 
 
 " DOC Options: 
@@ -83,4 +83,3 @@ if get(g:plug_smartmove, 'map_home_end', 1) > 0
    delfunction s:Install_MapHomeEnd
 endif
 
-let g:loadedPlug.smartmove = 1
